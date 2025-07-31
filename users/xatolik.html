@@ -1,0 +1,278 @@
+PS C:\Users\User> rabbitmqctl list_queues
+Timeout: 60.0 seconds ...
+Listing queues for vhost / ...
+name    messages
+celery  8
+celeryev.8ab8d5ea-8695-44e0-a55e-2e6c9e7f06c6   0
+celeryev.972f228d-e58d-4d35-a84f-3898502a8a78   0
+celery@super.celery.pidbox      0
+PS C:\Users\User> celery -A goodreads worker -l INFO
+celery : The term 'celery' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of
+the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ celery -A goodreads worker -l INFO
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (celery:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\User>  cd .\Desktop\project\goodreads\
+PS C:\Users\User\Desktop\project\goodreads> pipenv shell
+Launching subshell in virtual environment...
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\User\Desktop\project\goodreads> rabbitmqctl list_queues
+Timeout: 60.0 seconds ...
+Listing queues for vhost / ...
+name    messages
+celery  8
+celeryev.8ab8d5ea-8695-44e0-a55e-2e6c9e7f06c6   0
+celeryev.972f228d-e58d-4d35-a84f-3898502a8a78   0
+celery@super.celery.pidbox      0
+PS C:\Users\User\Desktop\project\goodreads> celery -A goodreads worker -l INFO
+[2025-06-04 17:16:15,835: WARNING/MainProcess] No hostname was supplied. Reverting to default 'localhost'
+
+ -------------- celery@super v5.5.3 (immunity)
+--- ***** -----
+-- ******* ---- Windows-10-10.0.26100-SP0 2025-06-04 17:16:15
+- *** --- * ---
+- ** ---------- [config]
+- ** ---------- .> app:         goodreads:0x190fc190fa0
+- ** ---------- .> transport:   amqp://guest:**@localhost:5672//
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 12 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** -----
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+
+
+[tasks]
+  . goodreads.celery.debug_task
+  . users.tasks.send_email
+
+[2025-06-04 17:16:15,955: INFO/MainProcess] Connected to amqp://guest:**@127.0.0.1:5672//
+[2025-06-04 17:16:15,973: INFO/MainProcess] mingle: searching for neighbors
+[2025-06-04 17:16:16,010: WARNING/MainProcess] No hostname was supplied. Reverting to default 'localhost'
+[2025-06-04 17:16:16,625: INFO/SpawnPoolWorker-1] child process 17472 calling self.run()
+[2025-06-04 17:16:16,625: INFO/SpawnPoolWorker-2] child process 19348 calling self.run()
+[2025-06-04 17:16:16,645: INFO/SpawnPoolWorker-5] child process 17144 calling self.run()
+[2025-06-04 17:16:16,657: INFO/SpawnPoolWorker-3] child process 9932 calling self.run()
+[2025-06-04 17:16:16,659: INFO/SpawnPoolWorker-4] child process 16896 calling self.run()
+[2025-06-04 17:16:16,691: INFO/SpawnPoolWorker-7] child process 18656 calling self.run()
+[2025-06-04 17:16:16,703: INFO/SpawnPoolWorker-9] child process 3196 calling self.run()
+[2025-06-04 17:16:16,718: INFO/SpawnPoolWorker-10] child process 13284 calling self.run()
+[2025-06-04 17:16:16,718: INFO/SpawnPoolWorker-6] child process 1812 calling self.run()
+[2025-06-04 17:16:16,718: INFO/SpawnPoolWorker-8] child process 16052 calling self.run()
+[2025-06-04 17:16:16,744: INFO/SpawnPoolWorker-11] child process 17232 calling self.run()
+[2025-06-04 17:16:16,819: INFO/SpawnPoolWorker-12] child process 2496 calling self.run()
+[2025-06-04 17:16:17,058: INFO/MainProcess] mingle: all alone
+[2025-06-04 17:16:17,076: WARNING/MainProcess] C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\kombu\pidbox.py:72: UserWarning: A node named celery@super is already using this process mailbox!
+
+Maybe you forgot to shutdown the other node or did not do so properly?
+Or if you meant to start multiple nodes on the same host please make sure
+you give each node a unique node name!
+
+  warnings.warn(W_PIDBOX_IN_USE.format(node=self))
+
+[2025-06-04 17:16:17,113: INFO/MainProcess] celery@super ready.
+[2025-06-04 17:16:17,597: ERROR/SpawnPoolWorker-5] Pool process <billiard.pool.Worker object at 0x000001659F8D8FD0> error: PermissionError(13, 'Access is denied', None, 5, None)
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 473, in receive
+    ready, req = _receive(1.0)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 445, in _recv
+    return True, loads(get_payload())
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\queues.py", line 394, in get_payload
+    with self._rlock:
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\synchronize.py", line 115, in __enter__
+    return self._semlock.__enter__()
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 351, in workloop
+    req = wait_for_job()
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 480, in receive
+    raise SystemExit(EX_FAILURE)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 292, in __call__
+    sys.exit(self.workloop(pid=pid))
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 396, in workloop
+    self._ensure_messages_consumed(completed=completed)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 406, in _ensure_messages_consumed
+    if self.on_ready_counter.value >= completed:
+  File "<string>", line 3, in getvalue
+PermissionError: [WinError 5] Access is denied
+[2025-06-04 17:16:17,597: ERROR/SpawnPoolWorker-5] Pool process <billiard.pool.Worker object at 0x000001659F8D8FD0> error: PermissionError(13, 'Access is denied', None, 5, None)
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 473, in receive
+    ready, req = _receive(1.0)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 445, in _recv
+    return True, loads(get_payload())
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\queues.py", line 394, in get_payload
+    with self._rlock:
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\synchronize.py", line 115, in __enter__
+    return self._semlock.__enter__()
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 351, in workloop
+    req = wait_for_job()
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 480, in receive
+    raise SystemExit(EX_FAILURE)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 292, in __call__
+    sys.exit(self.workloop(pid=pid))
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 396, in workloop
+    self._ensure_messages_consumed(completed=completed)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 406, in _ensure_messages_consumed
+    if self.on_ready_counter.value >= completed:
+  File "<string>", line 3, in getvalue
+PermissionError: [WinError 5] Access is denied
+[2025-06-04 17:16:17,621: ERROR/SpawnPoolWorker-4] Pool process <billiard.pool.Worker object at 0x0000023EF30B8FD0> error: PermissionError(13, 'Access is denied', None, 5, None)
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 473, in receive
+    ready, req = _receive(1.0)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 445, in _recv
+    return True, loads(get_payload())
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\queues.py", line 394, in get_payload
+    with self._rlock:
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\synchronize.py", line 115, in __enter__
+    return self._semlock.__enter__()
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 351, in workloop
+    req = wait_for_job()
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 480, in receive
+    raise SystemExit(EX_FAILURE)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 292, in __call__
+    sys.exit(self.workloop(pid=pid))
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 396, in workloop
+    self._ensure_messages_consumed(completed=completed)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 406, in _ensure_messages_consumed
+    if self.on_ready_counter.value >= completed:
+  File "<string>", line 3, in getvalue
+PermissionError: [WinError 5] Access is denied
+[2025-06-04 17:16:17,621: ERROR/SpawnPoolWorker-4] Pool process <billiard.pool.Worker object at 0x0000023EF30B8FD0> error: PermissionError(13, 'Access is denied', None, 5, None)
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 473, in receive
+    ready, req = _receive(1.0)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 445, in _recv
+    return True, loads(get_payload())
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\queues.py", line 394, in get_payload
+    with self._rlock:
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\synchronize.py", line 115, in __enter__
+    return self._semlock.__enter__()
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 351, in workloop
+    req = wait_for_job()
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 480, in receive
+    raise SystemExit(EX_FAILURE)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 292, in __call__
+    sys.exit(self.workloop(pid=pid))
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 396, in workloop
+    self._ensure_messages_consumed(completed=completed)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 406, in _ensure_messages_consumed
+    if self.on_ready_counter.value >= completed:
+  File "<string>", line 3, in getvalue
+PermissionError: [WinError 5] Access is denied
+[2025-06-04 17:16:17,623: ERROR/SpawnPoolWorker-3] Pool process <billiard.pool.Worker object at 0x0000022D38AA8FD0> error: PermissionError(13, 'Access is denied', None, 5, None)
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 473, in receive
+    ready, req = _receive(1.0)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 445, in _recv
+    return True, loads(get_payload())
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\queues.py", line 394, in get_payload
+    with self._rlock:
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\synchronize.py", line 115, in __enter__
+    return self._semlock.__enter__()
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 351, in workloop
+    req = wait_for_job()
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 480, in receive
+    raise SystemExit(EX_FAILURE)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 292, in __call__
+    sys.exit(self.workloop(pid=pid))
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 396, in workloop
+    self._ensure_messages_consumed(completed=completed)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 406, in _ensure_messages_consumed
+    if self.on_ready_counter.value >= completed:
+  File "<string>", line 3, in getvalue
+PermissionError: [WinError 5] Access is denied
+[2025-06-04 17:16:17,623: ERROR/SpawnPoolWorker-3] Pool process <billiard.pool.Worker object at 0x0000022D38AA8FD0> error: PermissionError(13, 'Access is denied', None, 5, None)
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 473, in receive
+    ready, req = _receive(1.0)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 445, in _recv
+    return True, loads(get_payload())
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\queues.py", line 394, in get_payload
+    with self._rlock:
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\synchronize.py", line 115, in __enter__
+    return self._semlock.__enter__()
+PermissionError: [WinError 5] Access is denied
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 351, in workloop
+    req = wait_for_job()
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 480, in receive
+    raise SystemExit(EX_FAILURE)
+SystemExit: 1
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 292, in __call__
+    sys.exit(self.workloop(pid=pid))
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 396, in workloop
+    self._ensure_messages_consumed(completed=completed)
+  File "C:\Users\User\Desktop\project\goodreads\.venv\lib\site-packages\billiard\pool.py", line 406, in _ensure_messages_consumed
+    if self.on_ready_counter.value >= completed:
+  File "<string>", line 3, in getvalue
+PermissionError: [WinError 5] Access is denied
+[2025-06-04 17:16:17,630: ERROR/MainProcess] Process 'SpawnPoolWorker-5' pid:15132 exited with 'exitcode 1'
+[2025-06-04 17:16:17,745: ERROR/MainProcess] Process 'SpawnPoolWorker-4' pid:2692 exited with 'exitcode 1'
+[2025-06-04 17:16:17,745: ERROR/MainProcess] Process 'SpawnPoolWorker-3' pid:1900 exited with 'exitcode 1'
+[2025-06-04 17:16:18,061: INFO/SpawnPoolWorker-13] child process 16532 calling self.run()
+[2025-06-04 17:16:18,139: INFO/SpawnPoolWorker-14] child process 2028 calling self.run()
+[2025-06-04 17:16:18,153: INFO/SpawnPoolWorker-15] child process 18612 calling self.run()
